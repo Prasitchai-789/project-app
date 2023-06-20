@@ -66,9 +66,18 @@ def delete(request,person_id):
 def rpo_po(request):
     all_ffb = Ffb.objects.all().order_by('-docudate','-billid')
     current_date = datetime.now().date()  # วันปัจจุบัน
+    all_ffb = Ffb.objects.all().order_by('-docudate', '-billid')
+    filtered_vendorcode_farmer = "96"
+    filtered_vendorcode_ramps = "97"
+    total_vendorcode_farmer_sum = Ffb.objects.filter(docudate=current_date, vendorcode__startswith=filtered_vendorcode_farmer).aggregate(sum=Sum('goodnet'))['sum'] or 0
+    total_vendorcode_ramps_sum = Ffb.objects.filter(docudate=current_date, vendorcode__startswith=filtered_vendorcode_ramps).aggregate(sum=Sum('goodnet'))['sum'] or 0
     total_sum = Ffb.objects.filter(docudate=current_date).aggregate(sum=Sum('goodnet'))
     total_count = Ffb.objects.filter(docudate=current_date).count()
-    return render(request,"palm/rpo_po.html",{"all_ffb":all_ffb,'total_sum': total_sum['sum'],'total_count': total_count})
+    return render(request,"palm/rpo_po.html",{
+        "all_ffb":all_ffb,'total_sum': total_sum['sum'],
+        'total_count': total_count,
+        'total_vendorcode_farmer_sum': total_vendorcode_farmer_sum,
+        'total_vendorcode_ramps_sum': total_vendorcode_ramps_sum,})
 
 
 
