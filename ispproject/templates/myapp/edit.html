@@ -1,0 +1,45 @@
+{% extends "myapp/add.html" %}
+<!-- Edit Myapp  -->
+<div class="modal fade col-md-4 offset-4" id="edit_Modal{{person.id}}"  tabindex="-1"  aria-labelledby="edit_ModalModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+            <div class="modal-header bg-dark ">
+                <h5 class="modal-title text-light font-weight-bold" id="edit_ModalLabel"><i calss="fas fa-plus"></i>&nbsp;&nbsp; แก้ไข </h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- -- Form -- -->
+            <form action="/edit/{{person.id}}"  method="POST"  autocomplete="off">
+                {% csrf_token %}
+                <div class="modal-body ">
+                    <div class="row">
+                        <!-- <div class="input-group mb-3">
+                            <span class="side-label btn badge-secondary bg-light"><i class="fas fa-key"></i></span>
+                            <input type="text" class="form-control" name="id" value="{{person.id}}" readonly>
+                        </div> -->
+                        <div class="row col-md-12 mt-1">
+                            <label for="level" class="form-label fw-bold">รายละเอียด</label>
+                            <div class="col-md-12">
+                                <div class="form-group ">
+                                    <input type="text" name="name" class="form-control" value="{{person.name}}" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-md-12 mt-1">
+                            <label for="level" class="form-label fw-bold">อายุ</label>
+                            <div class="col-md-12">
+                                <div class="form-group ">
+                                    <input type="number" name="age" class="form-control" placeholder="" required value="{{person.age}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                    <button type="submit"  class="btn btn-warning"><i class="far fa-save"></i> อัพเดท</button>
+                </div>   
+            </form>
+            
+        </div>
+    </div>
+    </div>

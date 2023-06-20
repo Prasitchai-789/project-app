@@ -1,0 +1,41 @@
+<!-- Add Myapp  -->
+<div class="modal fade col-md-4 offset-4"{% block modal-id %} id="add_Modal" {% endblock modal-id %} data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="add_ModalModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title text-light font-weight-bold" id="add_ModalLabel">{% block modal-title %}<i calss="fas fa-plus"></i>&nbsp;&nbsp; ข้อมูล {% endblock modal-title %}</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- -- Form -- -->
+            <form {% block Action %} action="/form" {% endblock Action %} method="POST"  autocomplete="off">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        {% block Value-id %} {% endblock Value-id %}
+                        <div class="row col-md-12 mt-1">
+                            <label for="level" class="form-label fw-bold">รายละเอียด</label>
+                            <div class="col-md-12">
+                                <div class="form-group ">
+                                    <input type="text" name="name" class="form-control" placeholder="ชื่อ" required {% block Value-name %} {% endblock Value-name %}>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-md-12 mt-1">
+                            <label for="level" class="form-label fw-bold">อายุ</label>
+                            <div class="col-md-12">
+                                <div class="form-group ">
+                                    <input type="number" name="age" class="form-control" placeholder="อายุ" required {% block Value-age %} {% endblock Value-age %}>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                    <button type="submit"  class="btn btn-success">{% block modal-submit %}<i class="far fa-save"></i> บันทึก {% endblock modal-submit %}</button>
+                </div>   
+            </form>
+            
+        </div>
+    </div>
+</div>

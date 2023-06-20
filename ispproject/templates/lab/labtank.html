@@ -1,0 +1,523 @@
+{% extends "layouts/base.html" %}
+
+{% block name %}
+<div class="sidebar-brand-text mx-3">ISANPALM</div>
+{% endblock %}
+
+{% block Dashboard %}
+<li class="nav-item active">
+    <a class="nav-link" href="labtank">
+    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <span>ฝ่ายควบคุมคุณภา</span></a>    
+</li>
+{% endblock Dashboard %}
+                  
+
+{% block content %}
+<div class="col-lg-12  text-center">
+    <h2 class="align-middle ">ปริมาณน้ำมันปาล์มดิบ</h2> 
+</div>
+<!-- ข้อมูลรวม -->
+<div class="container col-md-12">
+    <!-- <div class="row justify-content-md-center ">
+    
+        <div class="col mb-3">
+            <div class="card text-white " style="max-width: 30rem;">
+                <div class="card-header bg-primary">Total   (max : 4,100 Tons.)</div>
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col ">
+                            <div class="fs-2 mb-2 font-weight-bold text-center text-danger">
+                                
+                                Kg. 
+                            </div>
+                            
+                              <table class="table table-hover my-2">
+                                <tr>
+                                    <th class="texe text-center text-danger">Temp : 
+                                    {% for data in all_labtank1 %}
+                                        {{ data.tempid }}
+                                    {% endfor %}
+                                        
+                                    </th>
+                                    <th class="texe text-center">% FFA</th>
+                                    <th class="texe text-center">% Moisture</th>
+                                    <th class="texe text-center">% DOBI</th>
+                                </tr>
+                               
+                                <tr>
+                                    <td class="texe text-center align-middle">บน</td>
+                                    {% for data in all_labtank1 %}
+                                    <td class="texe text-center align-middle {% if data.ffa_top >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.ffa_top }}
+                                    {% endfor %}
+                                        
+                                    </td>
+                                    {% for data in all_labtank1 %}
+                                    <td class="texe text-center align-middle {% if data.moisture_top >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.moisture_top }}
+                                    {% endfor %}
+                                         
+                                        
+                                    </td>
+                                    {% for data in all_labtank1 %}
+                                    <td class="texe text-center align-middle {% if data.dobi_top >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.dobi_top }}
+                                    {% endfor %}
+                                       
+                                        
+                                    </td>
+                                </tr>
+                                
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Area Chart -->
+        <!-- <div class="col mb-3">
+            <div class="card text-white " style="max-width: 30rem;">
+                
+            </div>
+        </div>
+         -->
+    <!-- </div> -->
+</div>
+<div class="container col-md-12 ">
+    <div class="row justify-content-md-center font-weight-bold ">
+    
+        <div class="col mb-3">
+            <div class="card text-white " style="max-width: 30rem;">
+                <div class="card-header bg-danger ">Tank No. 01   (max : 100 Tons.)</div>
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col ">
+                            <div class="fs-2 mb-2 font-weight-bold text-center text-danger">
+                                {% for data in all_labtank1 %}
+                                     {{ data.volume }}
+                                {% endfor %}
+                                Kg. <br>
+                            </div>
+                            
+                              <table class="table table-hover my-2">
+                                <tr>
+                                    <th class="texe text-center text-danger">Temp : 
+                                    {% for data in all_labtank1 %}
+                                        {{ data.tempid }}
+                                    {% endfor %}
+                                        <br>
+                                    </th>
+                                    <th class="texe text-center">% FFA</th>
+                                    <th class="texe text-center">% Moisture</th>
+                                    <th class="texe text-center">% DOBI</th>
+                                </tr>
+                               
+                                <tr>
+                                    <td class="texe text-center align-middle">บน</td>
+                                    {% for data in all_labtank1 %}
+                                    <td class="texe text-center align-middle {% if data.ffa_top >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.ffa_top }}
+                                    {% endfor %}
+                                        <br>
+                                    </td>
+                                    {% for data in all_labtank1 %}
+                                    <td class="texe text-center align-middle {% if data.moisture_top >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.moisture_top }}
+                                    {% endfor %}
+                                         <br>
+                                        
+                                    </td>
+                                    {% for data in all_labtank1 %}
+                                    <td class="texe text-center align-middle {% if data.dobi_top >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.dobi_top }}
+                                    {% endfor %}
+                                        <br>
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="texe text-center align-middle">ล่าง</td>
+                                    {% for data in all_labtank1 %}
+                                    <td class="texe text-center align-middle {% if data.ffa_low >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.ffa_low }}
+                                    {% endfor %}
+                                        <br>
+                                        </td>
+                                    {% for data in all_labtank1 %}
+                                    <td class="texe text-center align-middle {% if data.moisture_low >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.moisture_low }}
+                                    {% endfor %}
+                                             <br>
+                                            
+                                        </td>
+                                    {% for data in all_labtank1 %}
+                                    <td class="texe text-center align-middle {% if data.dobi_low >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.dobi_low }}
+                                    {% endfor %}
+                                        <br>
+                                    </td>
+                                </tr>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col mb-3">
+            <div class="card text-white " style="max-width: 30rem;">
+                <div class="card-header bg-success">Tank No. 02    (max : 1,000 Tons.)</div>
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col ">
+                            <div class="fs-2 mb-2 font-weight-bold text-center text-primary">
+                                {% for data in all_labtank2 %}
+                                     {{ data.volume }}
+                                {% endfor %}
+                                Kg. <br>
+                            </div>
+                            
+                              <table class="table table-hover my-2">
+                                <tr>
+                                    <th class="texe text-center text-danger">Temp : 
+                                    {% for data in all_labtank2 %}
+                                        {{ data.tempid }}
+                                    {% endfor %}
+                                        <br>
+                                    </th>
+                                    <th class="texe text-center">% FFA</th>
+                                    <th class="texe text-center">% Moisture</th>
+                                    <th class="texe text-center">% DOBI</th>
+                                </tr>
+                               
+                                <tr>
+                                    <td class="texe text-center align-middle">บน</td>
+                                    {% for data in all_labtank2 %}
+                                    <td class="texe text-center align-middle {% if data.ffa_top >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.ffa_top }}
+                                    {% endfor %}
+                                        <br>
+                                    </td>
+                                    {% for data in all_labtank2 %}
+                                    <td class="texe text-center align-middle {% if data.moisture_top >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.moisture_top }}
+                                    {% endfor %}
+                                         <br>
+                                        
+                                    </td>
+                                    {% for data in all_labtank2 %}
+                                    <td class="texe text-center align-middle {% if data.dobi_top >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.dobi_top }}
+                                    {% endfor %}
+                                        <br>
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="texe text-center align-middle">ล่าง</td>
+                                    {% for data in all_labtank2 %}
+                                    <td class="texe text-center align-middle {% if data.ffa_low >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.ffa_low }}
+                                    {% endfor %}
+                                        <br>
+                                        </td>
+                                    {% for data in all_labtank2 %}
+                                    <td class="texe text-center align-middle {% if data.moisture_low >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.moisture_low }}
+                                    {% endfor %}
+                                             <br>
+                                            
+                                        </td>
+                                    {% for data in all_labtank2 %}
+                                    <td class="texe text-center align-middle {% if data.dobi_low >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.dobi_low }}
+                                    {% endfor %}
+                                        <br>
+                                    </td>
+                                </tr>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col mb-3">
+            <div class="card text-white " style="max-width: 30rem;">
+                <div class="card-header bg-success">Tank No. 03   (max : 1,000 Tons.)</div>
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col ">
+                            <div class="fs-2 mb-2 font-weight-bold text-center text-primary">
+                                {% for data in all_labtank3 %}
+                                     {{ data.volume }}
+                                {% endfor %}
+                                Kg. <br>
+                            </div>
+                            
+                              <table class="table table-hover my-2">
+                                <tr>
+                                    <th class="texe text-center text-danger">Temp : 
+                                    {% for data in all_labtank3 %}
+                                        {{ data.tempid }}
+                                    {% endfor %}
+                                        <br>
+                                    </th>
+                                    <th class="texe text-center">% FFA</th>
+                                    <th class="texe text-center">% Moisture</th>
+                                    <th class="texe text-center">% DOBI</th>
+                                </tr>
+                               
+                                <tr>
+                                    <td class="texe text-center align-middle font-weight-bold">บน</td>
+                                    {% for data in all_labtank3 %}
+                                    <td class="texe text-center align-middle {% if data.ffa_top >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.ffa_top }}
+                                    {% endfor %}
+                                        <br>
+                                    </td>
+                                    {% for data in all_labtank3 %}
+                                    <td class="texe text-center font-weight-bold align-middle {% if data.moisture_top >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.moisture_top }}
+                                    {% endfor %}
+                                         <br>
+                                        
+                                    </td>
+                                    {% for data in all_labtank3 %}
+                                    <td class="texe text-center align-middle {% if data.dobi_top >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.dobi_top }}
+                                    {% endfor %}
+                                        <br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="texe text-center align-middle">ล่าง</td>
+                                    {% for data in all_labtank3 %}
+                                    <td class="texe text-center align-middle {% if data.ffa_low >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.ffa_low }}
+                                    {% endfor %}
+                                        <br>
+                                    </td>
+                                    {% for data in all_labtank3 %}
+                                    <td class="texe text-center align-middle {% if data.moisture_low >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.moisture_low }}
+                                    {% endfor %}
+                                         <br>
+                                    </td>
+                                    {% for data in all_labtank3 %}
+                                    <td class="texe text-center align-middle {% if data.dobi_low >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.dobi_low }}
+                                    {% endfor %}
+                                        <br>
+                                    </td>
+                                </tr>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col mb-3">
+            <div class="card text-white " style="max-width: 30rem;">
+                <div class="card-header bg-success">Tank No. 04   (max : 2,000 Tons.)</div>
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col ">
+                            <div class="fs-2 mb-2 font-weight-bold text-primary text-center">
+                                {% for data in all_labtank4 %}
+                                    {{ data.volume }}
+                                {% endfor %}
+                                Kg. <br>
+                                
+
+                                                        
+                            </div>
+                            <table class="table table-hover my-2">
+                                <tr>
+                                    <th class="texe text-center text-danger">Temp : 
+                                    {% for data in all_labtank4 %}
+                                        {{ data.tempid }}
+                                    {% endfor %}
+                                        <br>    
+                                    </th>
+                                    <th class="texe text-center">% FFA</th>
+                                    <th class="texe text-center">% Moisture</th>
+                                    <th class="texe text-center">% DOBI</th>
+                                </tr>
+                               
+                                <tr>
+                                    <td class="texe text-center align-middle">บน</td>
+                                    {% for data in all_labtank4 %}
+                                    <td class="texe text-center align-middle {% if data.ffa_top >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.ffa_top }}
+                                    {% endfor %}
+                                        <br>
+                                    </td>
+                                    {% for data in all_labtank4 %}
+                                    <td class="texe text-center align-middle {% if data.moisture_top >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.moisture_top }}
+                                    {% endfor %}
+                                         <br>
+                                    </td>
+                                    {% for data in all_labtank4 %}
+                                    <td class="texe text-center align-middle {% if data.dobi_top >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.dobi_top }}
+                                    {% endfor %}
+                                        <br> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="texe text-center align-middle">ล่าง</td>
+                                    {% for data in all_labtank4 %}
+                                    <td class="texe text-center align-middle {% if data.ffa_low >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.ffa_low }}
+                                    {% endfor %}
+                                        <br> 
+                                    </td>
+                                    {% for data in all_labtank4 %}
+                                    <td class="texe text-center align-middle {% if data.moisture_low >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.moisture_low }}
+                                    {% endfor %}
+                                         <br> 
+                                    </td>
+                                    {% for data in all_labtank4 %}
+                                    <td class="texe text-center align-middle {% if data.dobi_low >= 5 %}text-danger{% else %}text-success{% endif %}">
+                                        {{ data.dobi_low }}
+                                    {% endfor %}
+                                        <br>
+                                    </td>
+                                </tr>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+    <div class="row">
+        <!-- Begin Page Content -->
+        <div class="col-lg-12">
+            <!-- Page Heading -->
+            <!-- <h1 class="h1 mb-4 text-gray-800 text-center">รายการซื้อผลปาล์ม </h1> -->
+            <div class="col">
+                <div class="row justify-content-end py">
+                    <div class="col">
+                        <!-- <button class="btn btn-outline-warning" data-toggle="modal" data-target="#SetVal_PO_Modal"><i class="fas fa-cogs"></i></button>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#VendorModal"><i class="fas fa-user-edit"></i></i></button> -->
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4 ">
+                <div class="card-header py-3">
+                    <div class="row d-flex">
+                        <div class="col">
+                            <h4 class="m-0 font-weight-bold text-center text-black">ตารางแสดงรายการ</h4>
+                            <button class="btn btn-outline-success" data-toggle="modal" data-target="#add_labtank_Modal"><i class="fas fa-file-invoice"> บันทึกข้อมูล</i></button>
+                        </div>
+                        
+                    </div>
+                    {% if messages %}
+                        {% for messages in messages %} 
+                        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                            <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                            </symbol>
+                            <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+                              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                            </symbol>
+                            <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                              <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                            </symbol>
+                          </svg>
+                          
+                          <div class="alert alert-success mt-2  d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                            <div>
+                                <strong>{{messages}}</strong>
+                            </div>
+                          </div>
+                          
+                        {% endfor %}
+                    {% endif %}
+                    <div class="card-body py-2">
+                        <div class="table-responsive">
+                            <table class="table table-hover nowrap text-dark font-weight-bold" id="datatable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th colspan="6"class="texe text-center "></th>
+                                        <th colspan="3" class="texe text-center ">ค่าคุณภาพช่วงบน</th>
+                                        <th colspan="3" class="texe text-center">ค่าคุณภาพช่วงล่าง</th>
+                                        <th colspan="2"class="texe text-center"></th>
+    
+                                    <tr>  
+                                        <th class="texe text-center">No.</th>
+                                        <th class="texe text-center">วันที่</th>
+                                        <th class="texe text-center">Tank No.</th>
+                                        <th class="texe text-end">ระดับน้ำมัน (cm) </th>
+                                        <th class="texe text-center">อุณหภูมิ C</th>
+                                        <th class="texe text-center">% FFA</th>
+                                        <th class="texe text-center">% Moisture</th>
+                                        <th class="texe text-center">% DOBI</th>
+                                        <th class="texe text-center">% FFA</th>
+                                        <th class="texe text-center">% Moisture</th>
+                                        <th class="texe text-center">% DOBI</th>
+                                        <th class="texe text-center">ผู้บันทึก</th>
+                                        
+                                        <th class="texe text-center" width="180px">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for labtank in all_labtank %}
+                                    <tr>
+                                        <th scope="row" class="texe text-center align-middle">{{ forloop.counter }}</th>
+                                        <td class="texe text-center align-middle">{{labtank.docudate|date:"d/m/Y"}}</td>                          
+                                        <td class="texe text-center align-middle">{{labtank.tankid}}</td>
+                                        <td class="texe text-center align-middle">{{labtank.level}}</td>
+                                        <td class="texe text-center align-middle">{{labtank.tempid}}</td>
+                                        <th class="texe text-end align-middle {% if labtank.ffa_top >= 5 %}text-danger{% else %}text-success{% endif %}">{{labtank.ffa_top}}</th>
+                                        <td class="texe text-center align-middle {% if labtank.moisture_top >= 5 %}text-danger{% else %}text-success{% endif %}">{{labtank.moisture_top}}</td>
+                                        <td class="texe text-center align-middle {% if labtank.dobi_top >= 5 %}text-danger{% else %}text-success{% endif %}">{{labtank.dobi_top}}</td>
+                                        <td class="texe text-end align-middle {% if labtank.ffa_low >= 5 %}text-danger{% else %}text-success{% endif %}">{{labtank.ffa_low}}</td>
+                                        <td class="texe text-center align-middle {% if labtank.moisture_low >= 5 %}text-danger{% else %}text-success{% endif %}">{{labtank.moisture_low}}</td>
+                                        <td class="texe text-center align-middle {% if labtank.dobi_low >= 5 %}text-danger{% else %}text-success{% endif %}">{{labtank.dobi_low}}</td>
+                                        <td class="texe text-center align-middle">{{labtank.user_rec}}</td>
+                                        <td class="texe text-center align-middle"><button class="btn btn-warning" data-toggle="modal" data-target="#edit_labtank_Modal{{labtank.id}}"><i class="far fa-edit text"></i></button>
+                                            <a class=" btn btn-danger far fa-trash-alt" href="delete_labtank/{{labtank.id}}" 
+                                            onclick="return confirm('คุณต้องการลบข้อมูล {{labatnk.id}} หรือไม่ ?')" 
+                                            ></a>
+                                        </td>
+                                      </tr>
+                                     <!-- Edit   -->
+                                     
+
+                                     {% include 'lab/edit_labtank.html' %}
+
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /.container-fluid -->
+
+        </div>
+    </div>
+    
+<!-- Add   -->
+
+    {% include 'lab/add_labtank.html' %}
+
+
+    
+
+
+
+      
+
+{% endblock %}

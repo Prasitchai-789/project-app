@@ -1,0 +1,68 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block name %}
+<div class="sidebar-brand-text mx-3">ISANPALM</div>
+
+{% endblock %}
+
+{% block Dashboard %}
+<li class="nav-item active">
+  <a class="nav-link" href="/">
+  <i class="fas fa-fw fa-tachometer-alt"></i>
+  <span>Dashboard</span></a>    
+</li>
+
+{% endblock %}
+                  
+
+{% block content %}
+
+<!-- <h2 class="text-center">ข้อมูล</h2> -->
+<button class="btn btn-outline-success my-2" data-toggle="modal" data-target="#add_Modal"><i class="fas fa-file-invoice"> บันทึกข้อมูล</i></button>
+{% if messages %}
+  {% for messages in messages %}  
+  <div class="alert alert-success" role="alert">
+    <strong>{{messages}}</strong>
+  </div>
+    
+  {% endfor %}
+{% endif %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">รหัส</th>
+        <th scope="col">ชื่อ</th>
+        <th scope="col">อายุ</th>
+        <th scope="col">วันที่เพิ่มข้อมูล</th>
+        <th scope="col">แก้ไข</th>
+        <th scope="col">ลบ</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for person in all_person %}
+        <tr>
+            <th scope="row">{{person.id}}</th>
+            <td>{{person.name}}</td>
+            <td>{{person.age}}</td>
+            <td>{{person.date}}</td>
+            <td><button class="btn btn-warning" data-toggle="modal" data-target="#edit_Modal{{ person.id}}"><i class="far fa-edit text"></i></button></td>
+            <td>
+                <a class=" btn btn-danger far fa-trash-alt" href="delete/{{person.id}}" 
+                onclick="return confirm('คุณต้องการลบข้อมูล {{person.name}} หรือไม่ ?')" 
+                ></a>
+            </td>
+          </tr>
+
+          {% include 'myapp/edit2.html' %}
+<!-- Edit Myapp  -->
+
+        {% endfor %}
+    </tbody>
+  </table>
+
+
+    
+{% endblock %}
+
+

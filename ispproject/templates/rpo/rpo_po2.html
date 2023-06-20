@@ -1,0 +1,160 @@
+{% extends "layouts/base.html" %}
+
+{% block name %}
+<div class="sidebar-brand-text mx-3">ISANPALM</div>
+{% endblock %}
+
+{% block Dashboard %}
+<li class="nav-item active">
+    <a class="nav-link" href="rpo_po">
+    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <span>ฝ่ายจัดซื้อปาล์ม</span></a>    
+</li>
+{% endblock Dashboard %}
+                  
+
+{% block content %}
+    <div class="row">
+        <!-- Begin Page Content -->
+        <div class="col-lg-12">
+            <!-- Page Heading -->
+            <!-- <h1 class="h1 mb-4 text-gray-800 text-center">รายการซื้อผลปาล์ม </h1> -->
+            <div class="col">
+                <div class="row justify-content-end py">
+                    <div class="col">
+                        <!-- <button class="btn btn-outline-warning" data-toggle="modal" data-target="#SetVal_PO_Modal"><i class="fas fa-cogs"></i></button>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#VendorModal"><i class="fas fa-user-edit"></i></i></button> -->
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4 ">
+                <div class="card-header py-3">
+                    <div class="row d-flex">
+                        <div class="col">
+                            <h4 class="m-0 font-weight-bold text-center">ตารางแสดงรายการซื้อผลปาล์ม</h4>
+                            <button class="btn btn-outline-success" data-toggle="modal" data-target="#add_ffb_Modal"><i class="fas fa-file-invoice"> บันทึกข้อมูล</i></button>
+                        </div>
+                        
+                    </div>
+                    {% if messages %}
+                        {% for messages in messages %}  
+                        <div class="alert alert-success" role="alert">
+                            <strong>{{messages}}</strong>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover nowrap text-dark font-weight-bold" id="tb_PO" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>ลำดับ</th>
+                                        <th>วันที่</th>
+                                        <th>PO</th>
+                                        <th>รหัสบิล</th>
+                                        <th>ประเภทรถ</th>
+                                        <th>ทะเบียนรถ</th>
+                                        <th>รหัสลูกค้า</th>
+                                        <th>ชื่อลูกค้า</th>
+                                        <th>ขาเข้า</th>
+                                        <th>ขาออก</th>
+                                        <th>สุทธิ</th>
+                                        <th>ราคา</th>
+                                        <th>เกรด</th>
+                                        <th>เจือปน</th>
+                                        <th>เพิ่มเติม</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for ffb in all_ffb %}
+                                    <tr>
+                                        <th scope="row">{{ffb.id}}</th>
+                                        <td>{{ffb.docudate}}</td>
+                                        <td>{{ffb.poinvid}}</td>
+                                        <td>{{ffb.billid}}</td>
+                                        <td>{{ffb.typecarid}}</td>
+                                        <td>{{ffb.vendorcardid}}</td>
+                                        <td>{{ffb.vendorcode}}</td>
+                                        <td>{{ffb.vendorname}}</td>
+                                        <td>{{ffb.goodib}}</td>
+                                        <td>{{ffb.goodob}}</td>
+                                        <td>{{ffb.goodnet}}</td>
+                                        <td>{{ffb.price1}}</td>
+                                        <td>{{ffb.grade}}</td>
+                                        <td>{{ffb.impurity}}</td>
+                                        <td><button class="btn btn-warning" data-toggle="modal" data-target="#edit_ffb_Modal{{ffb.id}}"><i class="far fa-edit text"></i></button>
+                                        </td>
+                                        <td>
+                                            <a class=" btn btn-danger far fa-trash-alt" href="delete_f/{{ffb.id}}" 
+                                            onclick="return confirm('คุณต้องการลบข้อมูล {{ffb.id}} หรือไม่ ?')" 
+                                            ></a>
+                                        </td>
+                                      </tr>
+                                     <!-- Edit   -->
+                                     <!-- <script type="text/javascript">
+                                        $(document).ready(function() {
+                                
+                                            $(document).on('click', '.edit_ffb_Modal' , function () {
+                                                let $this = $(this);
+                                                let id = $this.data('id');
+                                           
+                                                $.ajax({
+                                                    type: "GET",
+                                                    url: '{{ffb.id}}' +'/'+ id,
+                                                    success: function (response) {
+                                                        let editModal = $('#editlabtankModal');
+                                                        let inputId = editModal.find('#id');
+                                                        let inputDocudate = editModal.find('#docudate');
+                                                        let inputPoinvid = editModal.find('#poinvid');
+                                                        let inputBillid = editModal.find('#billid');
+                                                        let inputTypecarid = editModal.find('#typecarid');
+                                                        let inputVendorcardid = editModal.find('#vendorcardid');
+                                                        let inputVendorcode = editModal.find('#vendorcode');
+                                                        let inputVendorname = editModal.find('#vendorname');
+                                                        let inputGoodib = editModal.find('#goodib');
+                                                        let inputGoodob = editModal.find('#goodob');
+                                                        let inputGoodnet = editModal.find('#goodnet');
+                                                        let inputPrice1 = editModal.find('#price1');
+                                                        let inputGrade = editModal.find('#grade');
+                                                        let inputImpurity = editModal.find('#impurity');
+                                                        
+                                
+                                                        inputId.val(response.id);
+                                                        inputDocudate.val(response.docudate);
+                                                        inputPoinvid.val(response.poinvid);
+                                                        inputBillid.val(response.billid);
+                                                        inputTypecarid.val(response.typecarid);
+                                                        inputVendorcardid.val(response.vendorcardid);
+                                                        inputVendorcode.val(response.vendorcode);
+                                                        inputVendorname.val(response.vendorname);
+                                                        inputGoodib.val(response.goodib);
+                                                        inputGoodob.val(response.goodob);
+                                                        inputGoodnet.val(response.goodnet);
+                                                        inputPrice1.val(response.price1);
+                                                        inputGrade.val(response.grade);
+                                                        inputImpurity.val(response.impurity);
+                                                    }
+                                                });
+                                            });
+                                
+                                            
+                                        });
+                                    </script>
+                                 -->
+                                     {% include 'palm/edit_rpo_po.html' %}
+
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'palm/add_rpo_po.html' %}
+
+{% endblock %}

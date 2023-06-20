@@ -1,0 +1,112 @@
+<!-- Add labtank  -->
+<div class="modal fade "{% block modal-id %} id="add_labtank_Modal" {% endblock modal-id %} data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="add_labtank_ModalModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title text-light font-weight-bold" id="add_lantank_ModalModal">{% block modal-title %}<i calss="fas fa-plus"></i>&nbsp;&nbsp; ข้อมูล labtank {% endblock modal-title %}</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- -- Form -- -->
+            <form {% block Action %} action="/add_labtank" {% endblock Action %} method="POST"  autocomplete="off">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="row col-md-12 mt-1">
+                            <label for="level" class="form-label">ข้อมูล</label>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    {% block Value-docudate %} <input type="date" name="docudate" id="docudate"  class="form-control" placeholder="วันที่"  required  > {% endblock Value-docudate %}
+                                    <!-- <input type="hidden" name="id" id="id"> -->
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <input type="tankid" name="tankid" id="tankid"  class="form-control" placeholder="Tank No." required {% block Value-tankid %} {% endblock Value-tankid %}>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-md-12 mt-1">
+                            <label for="level" class="form-label">ข้อมูลการวัด</label>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <input type="text" name="level" id="level"  class="form-control" placeholder="ระดับ" required {% block Value-level %} {% endblock Value-level %}>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <input type="number" name="tempid" id="tempid"  class="form-control" placeholder="อุณภูมิ" required {% block Value-tempid %} {% endblock Value-tempid %}>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-md-12 mt-1">
+                            <label for="Goodin" class="form-label">ค่าคุณภาพช่วงบน</label>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <input type="text" name="ffa_top" id="ffa_top"  class="form-control" placeholder="% FFA" required {% block Value-ffa_top %} {% endblock Value-ffa_top %}>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <input type="text" name="moisture_top" id="moisture_top"  class="form-control" placeholder="% Moisture" required {% block Value-moisture_top %} {% endblock Value-moisture_top %}>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <input type="text" name="dobi_top" id="dobi_top"  class="form-control" placeholder="% DOBI" required {% block Value-dobi_top %} {% endblock Value-dobi_top %}>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-md-12 mt-1">
+                            <label for="Goodin" class="form-label">ค่าคุณภาพช่วงล่าง</label>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <input type="text" name="ffa_low" id="ffa_low"  class="form-control" placeholder="% FFA" required {% block Value-ffa_low %} {% endblock Value-ffa_low %}>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <input type="text" name="moisture_low" id="moisture_low" class="form-control" placeholder="% Moisture" required {% block Value-moisture_low %} {% endblock Value-moisture_low %}>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <input type="text" name="dobi_low" id="dobi_low" class="form-control" placeholder="% DOBI" required {% block Value-dobi_low %} {% endblock Value-dobi_low %}>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-md-12 mt-1">
+                            <label for="Goodin" class="form-label" required>ผู้บันทึก</label>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <select name="user_rec" id="user_rec" class="form-select form-control">
+                                        <option selected disabled>=== เลือกชื่อ ===</option>
+                                        <option value="ประภาพร เชื้อพระซอง">ประภาพร เชื้อพระซอง</option>
+                                        <option value="ยุพา แสงนนท์">ยุพา แสงนนท์</option>
+                                        <option value="สุกัญญา สมหวัง">สุกัญญา สมหวัง</option>
+                                    </select>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                    {% block modal-submit %}<button type="submit"  class="btn btn-success"><i class="far fa-save"></i> บันทึก </button>{% endblock modal-submit %}
+                </div>   
+            </form>
+            
+        </div>
+    </div>
+</div>

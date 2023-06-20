@@ -1,0 +1,33 @@
+<!-- Edit FFB  -->
+{% extends "palm/add_rpo_po.html" %}
+<!-- Edit Myapp  -->
+{% block modal-id %} id="edit_ffb_Modal{{ffb.id}}" {% endblock modal-id %} data-backdrop
+
+{% block modal-title %}<i calss="fas fa-plus"><i calss="fas fa-plus"></i>&nbsp;&nbsp; Edit  {% endblock modal-title %}
+                
+<!-- -- Form -- -->
+{% block Action %} action="/edit_f/{{ffb.id}}" {% endblock Action %}
+
+{% block Value-id %} {% endblock Value-id %}
+
+{% block Value-poinvid %} Value= "{{ ffb.poinvid }}" {% endblock Value-poinvid %}
+{% block Value-billid %} Value= "{{ ffb.billid }}" {% endblock Value-billid %}
+{% block Value-vendorcardid %} Value= "{{ ffb.vendorcardid }}" {% endblock Value-vendorcardid %}
+{% block Value-typecarid %} Value= "{{ ffb.typecarid }}" {% endblock Value-typecarid %}
+{% block Value-goodib %} Value= "{{ ffb.goodib }}" {% endblock Value-goodib %}
+{% block Value-goodob %} Value= "{{ ffb.goodob }}" {% endblock Value-goodob %}
+{% block Value-goodnet %} Value= "{{ ffb.goodnet }}" {% endblock Value-goodnet %}
+{% block Value-price1 %} Value= "{{ ffb.price1 }}" {% endblock Value-price1 %}
+{% block Value-amnt1 %} Value= "{{ ffb.amnt1 }}" {% endblock Value-amnt1 %}
+{% block Value-vendorcode %} Value= "{{ ffb.vendorcode }}" {% endblock Value-vendorcode %}
+{% block Value-vendorname %} Value= "{{ ffb.vendorname }}" {% endblock Value-vendorname %}
+
+{% block Value-gradea %} {% if ffb.grade == "A" %} selected {% endif %} {% endblock Value-gradea %}
+{% block Value-gradeb %} {% if ffb.grade == "B" %} selected {% endif %} {% endblock Value-gradeb %}
+{% block Value-gradec %} {% if ffb.grade == "C" %} selected {% endif %} {% endblock Value-gradec %}
+
+{% block Value-impuritya %} {% if ffb.impurity == "A" %} selected {% endif %} {% endblock Value-impuritya %}
+{% block Value-impurityb %} {% if ffb.impurity == "B" %} selected {% endif %} {% endblock Value-impurityb %}
+{% block Value-impurityc %} {% if ffb.impurity == "C" %} selected {% endif %} {% endblock Value-impurityc %}
+
+{% block modal-submit %}<button type="submit"  class="btn btn-warning"><i class="far fa-save"></i> อัพเดท </button>{% endblock modal-submit %}

@@ -1,0 +1,101 @@
+{% extends "layouts/base.html" %}
+
+{% block name %}
+<div class="sidebar-brand-text mx-3">ISANPALM</div>
+{% endblock %}
+
+{% block Dashboard %}
+<li class="nav-item active">
+    <a class="nav-link" href="rpo_po">
+    <i class="fas fa-fw fa-tachometer-alt"></i>
+    <span>ฝ่ายจัดซื้อปาล์ม</span></a>    
+</li>
+{% endblock Dashboard %}
+                  
+
+{% block content %}
+    <div class="row">
+        <!-- Begin Page Content -->
+        <div class="col-lg-12">
+            <!-- Page Heading -->
+            <!-- <h1 class="h1 mb-4 text-gray-800 text-center">รายการซื้อผลปาล์ม </h1> -->
+            <div class="col">
+                <div class="row justify-content-end py">
+                    <div class="col">
+                        <!-- <button class="btn btn-outline-warning" data-toggle="modal" data-target="#SetVal_PO_Modal"><i class="fas fa-cogs"></i></button>
+                        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#VendorModal"><i class="fas fa-user-edit"></i></i></button> -->
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4 ">
+                <div class="card-header py-3">
+                    <div class="row d-flex">
+                        
+                        <div class="col">
+                            <h4 class="m-0 font-weight-bold text-center">แผนการขายสินค้า</h4>
+                            <button class="btn btn-outline-success col-md-1" data-toggle="modal" data-target="#add_ffb_Modal"><i class="fas fa-file-invoice"> บันทึกข้อมูล</i></button>
+                            
+                        </div>
+                        
+                    </div>
+                    {% if messages %}
+                        {% for messages in messages %}  
+                        <div class="alert alert-success" role="alert">
+                            <strong>{{messages}}</strong>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover nowrap text-dark font-weight-bold" id="tb_PO" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>ลำดับ</th>
+                                        <th>วันที่</th>
+                                        <th>ชื่อสินค้า</th>
+                                        <th>ทะเบียนรถ</th>
+                                        <th>ชื่อคู่ค้า</th>
+                                        <th>น้ำหนักสุทธิ</th>
+                                        <th>สถานะ</th>
+                                        <th>เพิ่มเติม</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for ffb in all_ffb %}
+                                    <tr>
+                                        <th scope="row">{{ffb.id}}</th>
+                                        <td>{{ffb.docudate}}</td>
+                                        <td>{{ffb.poinvid}}</td>
+                                        <td>{{ffb.billid}}</td>
+                                        <td>{{ffb.typecarid}}</td>
+                                        <td>{{ffb.vendorcardid}}</td>
+                                        <td>{{ffb.vendorcode}}</td>
+                                        <td><button class="btn btn-warning" data-toggle="modal" data-target="#edit_ffb_Modal{{ffb.id}}"><i class="far fa-edit text"></i></button></td>
+                                        <td>
+                                            <a class="far fa-trash-alt text-danger" href="delete_f/{{ffb.id}}" 
+                                            class="btn btn-danger"
+                                            onclick="return confirm('คุณต้องการลบข้อมูล {{ffb.id}} หรือไม่ ?')" 
+                                            ></a>
+                                        </td>
+                                      </tr>
+                                     <!-- Edit   -->
+                                     
+                                     {% include 'sale/edit_soplan.html' %}
+
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'sale/add_soplan.html' %}
+
+
+{% endblock %}

@@ -1,0 +1,159 @@
+<!-- Add FFB  -->
+<div class="modal fade"{% block modal-id %} id="add_ffb_Modal" {% endblock modal-id %} data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="add_ffb_ModalModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title text-light font-weight-bold" id="add_ffb_ModalModal">{% block modal-title %}<i calss="fas fa-plus"></i>&nbsp;&nbsp;ข้อมูลการรับซื้อผลปาล์ม {% endblock modal-title %}</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <form {% block Action %} action="/add"  {% endblock Action %} method="POST"  autocomplete="off">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="row col-md-12 mt-1">
+                            <label for="level" class="form-label fw-bold">รายละเอียดบิล</label>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <input type="text" name="billid" class="form-control" placeholder="เลขที่บิล" required {% block Value-billid %} {% endblock Value-billid %}>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <input type="text" name="poinvid" class="form-control" placeholder="หมายเลข PO" required {% block Value-poinvid %} {% endblock Value-poinvid %}>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <input type="text" id="scaler" name="scaler" class="form-control" placeholder="เครื่องชั่ง"  {% block Value-scaler %} {% endblock Value-scaler %}>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-md-12 mt-1">
+                            <label for="level" class="form-label fw-bold">ข้อมูลลูกค้า</label>
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <input type="text" name="vendorcode" class="form-control" placeholder="รหัสคู่ค้า" required {% block Value-vendorcode %} {% endblock Value-vendorcode %}>
+                                    
+                                </div>
+                            </div>
+                         
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <input type="text" name="vendorname" class="form-control" placeholder="ชื่อคู่ค้า" required {% block Value-vendorname %} {% endblock Value-vendorname %}>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-md-12 mt-1">
+                            <label for="Goodin" class="form-label fw-bold">ข้อมูลรถ</label>
+                                <div class="col-md-6">
+                                    <div class="form-group ">
+                                        <input type="text" name="vendorcardid"  class="ml-1 form-control" autocomplete="off" required placeholder="ทะเบียนรถ" required {% block Value-vendorcardid %} {% endblock Value-vendorcardid %}>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group ">
+                                        <input type="text" name="typecarid"  class="ml-1 form-control" autocomplete="off" required placeholder="ประเภทรถ" required {% block Value-typecarid %} {% endblock Value-typecarid %}>
+                                        
+                                    </div>
+                                </div>
+                                
+                                
+                        </div>
+                       
+                            <div class="row col-md-12 mt-1">
+                                <label for="Goodin" class="form-label fw-bold">ข้อมูลสินค้า</label>
+                                    <div class="col-md-4">
+                                        <div class="form-group ">
+                                            <input type="number" id="id_goodib" name="goodib" class="form-control" placeholder="น้ำหนักเข้า" required onchange='calculateGoodNetInput()'  {% block Value-goodib %} {% endblock Value-goodib %}>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group ">
+                                            <input type="number" id="id_goodob" name="goodob" class="form-control" placeholder="น้ำหนักออก" required onchange='calculateGoodNetInput()' {% block Value-goodob %} {% endblock Value-goodob %}>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group ">
+                                            <input type="number" id="id_goodnet" name="goodnet" class="form-control" readonly  {% block Value-goodnet %}  {%endblock Value-goodnet %}>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group ">
+                                            <input type="text" id="price1" name="price1" class="form-control" placeholder="ราคา"  {% block Value-price1 %} {% endblock Value-price1 %}>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group ">
+                                            <input type="number" id="docutype" name="docutype" class="form-control" placeholder="docutype"  {% block Value-docutype %} {% endblock Value-docutype %}>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group ">
+                                            <input type="text" id="statusbill" name="statusbill" class="form-control" placeholder="statusbill"  {% block Value-statusbill %} {% endblock Value-statusbill %}>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                            </div>
+                            <script>
+                                function calculateGoodNet() {
+                                    var goodib = parseFloat(document.getElementById("id_goodib").value);
+                                    var goodob = parseFloat(document.getElementById("id_goodob").value);
+                                    var goodnet = goodib - goodob;
+                                    document.getElementById("id_goodnet").value = goodnet;
+                                }
+                            </script>
+
+                            
+                         
+                        
+                            <div class="row col-md-12 mt-1">
+                                <label for="Goodin" class="form-label fw-bold">คุณภาพผลปาล์ม</label>
+                                <div class="col-md-4">
+                                    <div class="form-group ">
+                                        <select name="grade" id="grade" class="form-select form-control"required >
+                                            <option selected disabled>=== เกรด ===</option>
+                                            <option value="A" {% block Value-gradea %} {% if ffb.grade == "A" %} selected {% endif %} {% endblock Value-gradea %}>A</option>
+                                            <option value="B" {% block Value-gradeb %} {% if ffb.grade == "B" %} selected {% endif %} {% endblock Value-gradeb %}>B</option>
+                                            <option value="C" {% block Value-gradec %} {% if ffb.grade == "C" %} selected {% endif %} {% endblock Value-gradec %}>C</option>
+                                        </select>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group ">
+                                        <select name="impurity" id="impurity" class="form-select form-control" required {% block Value-impurity %} {% endblock Value-impurity %}>
+                                            <option selected disabled>== สิ่งเจือปน ==</option>
+                                            <option value="A" {% block Value-impuritya %} {% if ffb.impurity == "A" %} selected {% endif %} {% endblock Value-impuritya %}>A</option>
+                                            <option value="B" {% block Value-impurityb %} {% if ffb.impurity == "B" %} selected {% endif %} {% endblock Value-impurityb %}>B</option>
+                                            <option value="C" {% block Value-impurityc %} {% if ffb.impurity == "C" %} selected {% endif %} {% endblock Value-impurityc %}>C</option>
+                                        </select>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                    </div>
+                </div> 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                    {% block modal-submit %}<button type="submit"  class="btn btn-success"><i class="far fa-save"></i> บันทึก </button>{% endblock modal-submit %}
+                </div>   
+            </form>
+           
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,17 @@
+{% extends "myapp/add.html" %}
+<!-- Edit Myapp  -->
+{% block modal-id %} id="edit_Modal{{person.id}}" {% endblock modal-id %} data-backdrop
+
+{% block modal-title %}<i calss="fas fa-plus"><i calss="fas fa-plus"></i>&nbsp;&nbsp; แก้ไข  {% endblock modal-title %}
+                
+<!-- -- Form -- -->
+{% block Action %} action="/edit/{{person.id}}" {% endblock Action %}
+
+{% block Value-id %} {% endblock Value-id %}
+
+{% block Value-name %} value="{{person.name}}" {% endblock Value-name %}
+
+{% block Value-age %} value="{{person.age}}" {% endblock Value-age %}
+
+{% block modal-submit %}<i class="far fa-save"></i> อัพเดท {% endblock modal-submit %}
+               

@@ -1,0 +1,25 @@
+<!-- Edit   -->
+{% extends "lab/add_labtank.html" %}
+<!-- Edit Myapp  -->
+{% block modal-id %} id="edit_labtank_Modal{{labtank.id}}" {% endblock modal-id %} data-backdrop
+
+{% block modal-title %}<i calss="fas fa-plus"><i calss="fas fa-plus"></i>&nbsp;&nbsp; Edit  {% endblock modal-title %}
+                
+<!-- -- Form -- -->
+{% block Action %} action="/edit_labtank/{{labtank.id}}" {% endblock Action %}
+
+{% block Value-id %} {% endblock Value-id %}
+{% block Value-docudate %}
+  <input type="date" name="docudate" id="docudate" class="form-control" placeholder="วันที่" required value="{{ labtank.docudate|date:'d/m/Y' }}">
+{% endblock Value-docudate %}
+{% block Value-tankid %} Value= {{labtank.tankid}} {% endblock Value-tankid %}
+{% block Value-level %} Value= {{labtank.level}} {% endblock Value-level %}
+{% block Value-tempid %} Value= {{labtank.tempid}} {% endblock Value-tempid %}
+{% block Value-ffa_top %} Value= {{labtank.ffa_top}} {% endblock Value-ffa_top %}
+{% block Value-moisture_top %} Value= {{labtank.moisture_top}} {% endblock Value-moisture_top %}
+{% block Value-dobi_top %} Value= {{labtank.dobi_top}} {% endblock Value-dobi_top %}
+{% block Value-ffa_low %} Value= {{labtank.ffa_low}} {% endblock Value-ffa_low %}
+{% block Value-moisture_low %} Value= {{labtank.moisture_low}} {% endblock Value-moisture_low %}
+{% block Value-dobi_low %} Value= {{labtank.dobi_low}} {% endblock Value-dobi_low %}
+
+{% block modal-submit %}<button type="submit"  class="btn btn-warning"><i class="far fa-save"></i> อัพเดท </button>{% endblock modal-submit %}
