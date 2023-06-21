@@ -7,6 +7,7 @@ from django.db.models import Max,Subquery, OuterRef
 from datetime import datetime,timedelta
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Sum
+import requests
 
 
 # Create your views here.
@@ -142,7 +143,18 @@ def add(request):
         messages.success(request,"บันทึกข้อมูลไม่ได้")
         return render(request,"palm/rpo_po.html")
     
+# def send_line_notification(msg):
+#     url = 'https://notify-api.line.me/api/notify'
+#     token = 'FDkGYUZXSB3YjuvLGF5MkOEU61TxkSNzupCfEZkVYSs'
+#     headers = {
+#         'Content-Type': 'application/x-www-form-urlencoded',
+#         'Authorization': 'Bearer ' + token}
+#     data = {'message': msg}
+#     response = requests.post(url, headers=headers, data=data)
+#     print(response)
 
+# # ใส่ข้อความที่ต้องการแจ้งเตือน
+# msg = 'Hello world'
     
 def edit_f(request,ffb_id):
     if request.method == "POST":
