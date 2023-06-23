@@ -12,6 +12,7 @@ urlpatterns = [
 #<== RPO ==>
 
     path('rpo_po',views.rpo_po),
+    path('send_line_notification',views.send_line_notification),
     path('add',views.add),
     path('delete_f/<ffb_id>',views.delete_f),
     path('edit_f/<int:ffb_id>',views.edit_f),

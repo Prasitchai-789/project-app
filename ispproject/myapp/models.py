@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 # Create your models here.
 class Person(models.Model):
     name = models.CharField(max_length=100)
@@ -32,6 +33,8 @@ class Ffb(models.Model):
     docutype = models.IntegerField()
     
     def __str__(self):
+        self.statusbill = 'N'
+        self.save()
         return self.vendorname
     
 class Labtank(models.Model):
