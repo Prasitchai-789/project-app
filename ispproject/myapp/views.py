@@ -63,6 +63,16 @@ def delete(request,person_id):
 # <=== FFB ===>
 def rpo_po(request):
     all_ffb = Ffb.objects.all().order_by('-docudate','-billid')
+    
+    paginator = Paginator(all_ffb, 25)
+    page = request.GET.get('page')
+    try:
+        current_page = paginator.get_page(page)
+    except PageNotAnInteger:
+        current_page = paginator.get_page(2)  # หากไม่ได้รับค่าหรือค่าไม่ถูกต้อง กำหนดให้เป็นหน้าแรก
+    except EmptyPage:
+        current_page = paginator.page(paginator.num_pages)
+        
     current_date = datetime.now().date()  # วันปัจจุบัน
     all_ffb = Ffb.objects.all().order_by('-docudate', '-billid')
     filtered_vendorcode_farmer = "96"
@@ -75,20 +85,15 @@ def rpo_po(request):
         "all_ffb":all_ffb,'total_sum': total_sum['sum'],
         'total_count': total_count,
         'total_vendorcode_farmer_sum': total_vendorcode_farmer_sum,
-        'total_vendorcode_ramps_sum': total_vendorcode_ramps_sum,})
+        'total_vendorcode_ramps_sum': total_vendorcode_ramps_sum,
+        'current_page': current_page,})
 
 
 
 
-    # items_per_page = 20  # จำนวนรายการต่อหน้า
 
-    # paginator = Paginator(all_ffb, items_per_page)
-    # page = request.GET.get('page')
-    # try:
-    #     current_page = paginator.get_page(page)
-    # except PageNotAnInteger:
-    #     current_page = paginator.get_page(1)  # หากไม่ได้รับค่าหรือค่าไม่ถูกต้อง กำหนดให้เป็นหน้าแรก
-    # return render(request, "palm/rpo_po.html", {'current_page': current_page})
+
+
 
 
 
