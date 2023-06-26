@@ -17,7 +17,7 @@ urlpatterns = [
     path('delete_f/<ffb_id>',views.delete_f),
     path('edit_f/<int:ffb_id>',views.edit_f),
     
-    path('rpo_soplan',views.rpo_soplan),
+    # path('rpo_soplan',views.rpo_soplan)
 
 #<== sale ==>    
     path('soplan',views.soplan),

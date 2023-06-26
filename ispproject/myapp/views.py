@@ -9,31 +9,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Sum
 import requests
 from django.conf import settings
-# import pandas as pd
-# from sqlalchemy import create_engine
 
-
-# Create your views here.
-# <=== line_notification ===>
-# db_host = 'localhost'
-# db_name = 'DJANGO_APP'
-# db_user = 'sa'
-# db_password = 'Passw0rd'
-# db_port = ''
-# dsn = {"driver": "ODBC Driver 17 for SQL Server"}
-
-# # สร้างสตริงเชื่อมต่อฐานข้อมูล SQL
-# db_string = f'mssql+pyodbc://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}?dsn={dsn}'
-# # สร้างเครื่องมือเชื่อมต่อฐานข้อมูล
-# engine = create_engine(db_string)
-# # สร้างคำสั่ง SQL เพื่อดึงข้อมูลจากตาราง
-# sql_query = 'SELECT * FROM SOPlan'
-
-# # ใช้ pandas โหลดข้อมูลจากคำสั่ง SQL ในรูปแบบ DataFrame
-# df = pd.read_sql(sql_query, engine)
-
-# # แสดงข้อมูล
-# print(df)
         
 # <=== index ===>
 def login(request):
