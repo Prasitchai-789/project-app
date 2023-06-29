@@ -7,6 +7,7 @@ from django.db.models import Max,Subquery, OuterRef
 from datetime import datetime,timedelta
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Sum
+from django.contrib.humanize.templatetags.humanize import intcomma
 from django.template.defaultfilters import date
 import requests
 from django.conf import settings
@@ -80,13 +81,14 @@ def rpo_po(request):
     filtered_vendorcode_ramps = "97"
     total_vendorcode_farmer_sum = Ffb.objects.filter(docudate=current_date, vendorcode__startswith=filtered_vendorcode_farmer).aggregate(sum=Sum('goodnet'))['sum'] or 0
     total_vendorcode_ramps_sum = Ffb.objects.filter(docudate=current_date, vendorcode__startswith=filtered_vendorcode_ramps).aggregate(sum=Sum('goodnet'))['sum'] or 0
-    total_sum = Ffb.objects.filter(docudate=current_date).aggregate(sum=Sum('goodnet'))
+    total_sum = Ffb.objects.filter(docudate=current_date).aggregate(sum=Sum('goodnet')) 
+    total_sum_thousands = intcomma(total_sum['sum']) 
     total_count = Ffb.objects.filter(docudate=current_date).count()
     
     
         
     return render(request,"palm/rpo_po.html",{
-        "all_ffb":all_ffb,'total_sum': total_sum['sum'],
+        "all_ffb":all_ffb,'total_sum_thousands': total_sum_thousands,
         'total_count': total_count,
         'total_vendorcode_farmer_sum': total_vendorcode_farmer_sum,
         'total_vendorcode_ramps_sum': total_vendorcode_ramps_sum,
@@ -104,17 +106,8 @@ def send_line_notification(message):
     else:
         print("Failed to send Line notification.")
 
-
-
-
-
-
-
-
-
-
-
 def add(request):
+    
     if request.method == "POST":
         # รับข้อมูล
         poinvid = request.POST["poinvid"]
@@ -155,8 +148,11 @@ def add(request):
         ffb.save()
         
         messages.success(request,"บันทึกข้อมูลเรียบร้อย")
+        current_date = datetime.now().date()  # วันปัจจุบัน
+        total_sum = Ffb.objects.filter(docudate=current_date).aggregate(sum=Sum('goodnet'))
+        total_ton = round(total_sum['sum'] / 1000, 2)
         # ส่งการแจ้งเตือนผ่านไลน์
-        message = "วันที่ " + date(ffb.docudate, "d/m/Y")  + "\nเลขที่เอกสาร : " + (ffb.billid)+ "\nชื่อ :  " + (ffb.vendorname)+ "\nน้ำหนักสุทธิ : " + str(ffb.goodnet)+" Kg."
+        message = "ยอด " + str(total_ton) + " ตัน" + "\nวันที่ " + date(ffb.docudate, "d/m/Y")  + "\nเลขที่เอกสาร : " + (ffb.billid)+ "\nชื่อ :  " + (ffb.vendorname)+ "\nน้ำหนักสุทธิ : " + str(ffb.goodnet)+" Kg."
         
         send_line_notification(message)
 
