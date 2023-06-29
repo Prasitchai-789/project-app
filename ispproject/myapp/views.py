@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.utils.timezone import now
 from django.http import HttpResponse
-from .models import Person ,Ffb,Labtank,temp_dense,tank_volume
+from .models import Person ,Ffb,Labtank,temp_dense,tank_volume,Webapp_Emp,SOPlan,Webapp_EmpTitle,Webapp_Dept
 from django.contrib import messages
 from django.db.models import Max,Subquery, OuterRef
 from datetime import datetime,timedelta
@@ -81,6 +81,9 @@ def rpo_po(request):
     total_vendorcode_ramps_sum = Ffb.objects.filter(docudate=current_date, vendorcode__startswith=filtered_vendorcode_ramps).aggregate(sum=Sum('goodnet'))['sum'] or 0
     total_sum = Ffb.objects.filter(docudate=current_date).aggregate(sum=Sum('goodnet'))
     total_count = Ffb.objects.filter(docudate=current_date).count()
+    
+    
+        
     return render(request,"palm/rpo_po.html",{
         "all_ffb":all_ffb,'total_sum': total_sum['sum'],
         'total_count': total_count,
@@ -197,10 +200,9 @@ def rpo_soplan(request):
     return render(request,"palm/rpo_soplan.html")
 
 # <=== SALE ===>
-
 def soplan(request):
-    return render(request,"sale/soplan.html")
-
+    all_soplan = SOPlan.objects.all()
+    return render(request, "sale/soplan.html", { "all_soplan": all_soplan, })
 
 
 # <=== LAB ===>
@@ -341,8 +343,14 @@ def volume2(request):
     return render(request,"lab/labtank.html", { "volume1": volume1,"volume2": volume2 })
     
 
+def index_emp(request):
+    all_emp = Webapp_Emp.objects.all()
+    emp_titles = Webapp_EmpTitle.objects.filter(EmpTitleID__in=all_emp.values_list('EmpTitle', flat=True))
+    depts = Webapp_Dept.objects.filter(DeptID__in=all_emp.values_list('DeptID', flat=True))
+    return render(request, "hre/index_emp.html", { "all_emp": all_emp, "emp_titles": emp_titles , "depts": depts})
 
-def Webapp_Emp(request):
-    emp = Webapp_Emp.objects.all()
-    emp_name = Webapp_Emp.objects.filter().values('EmpName')
-    return render(request,"sale/soplan.html",{ "emp": emp,"emp_name": emp_name })
+def delete_emp(request,EmpID):
+    emp = Webapp_Emp.objects.get(EmpID=EmpID)
+    emp.delete()
+    messages.success(request, "ลบข้อมูลเรียบร้อย")
+    return redirect("/index_emp")

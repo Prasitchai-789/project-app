@@ -93,27 +93,9 @@
                 </div>
             </div>
         </div>
-        <ul class="pagination">
-            {% if all_ffb.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ all_ffb.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
-            </li>
-            {% endif %}
-    
-            {% for i in all_ffb.paginator.page_range %}
-            <li class="page-item {% if all_ffb.number == i %}active{% endif %}">
-                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-            </li>
-            {% endfor %}
-    
-            {% if all_ffb.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ all_ffb.next_page_number }}">Next</a>
-            </li>
-            {% endif %}
-        </ul>
+       
     </div>
-
+   
     {% include 'sale/add_soplan.html' %}
 
 

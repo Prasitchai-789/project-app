@@ -77,19 +77,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for ffb in all_ffb %}
+                                    {% for soplan in all_soplan %}
                                     <tr>
-                                        <th scope="row">{{ffb.id}}</th>
-                                        <td>{{ffb.docudate}}</td>
-                                        <td>{{ffb.poinvid}}</td>
-                                        <td>{{ffb.billid}}</td>
-                                        <td>{{ffb.typecarid}}</td>
-                                        <td>{{ffb.vendorcardid}}</td>
-                                        <td>{{ffb.vendorcode}}</td>
-                                        <td><button class="btn btn-warning" data-toggle="modal" data-target="#edit_ffb_Modal{{ffb.id}}"><i class="far fa-edit text"></i></button></td>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{soplan.SOPDate|date:"d/m/Y"}}</td>
+                                        <td>{{soplan.GoodName}}</td>
+                                        <td>{{soplan.NumberCar}}</td>
+                                        <td>{{soplan.CustID}}</td>
+                                        <td>{{soplan.NetWei}}</td>
+                                        <td>{{soplan.Status}}</td>
+                                        <td><button class="btn btn-warning" data-toggle="modal" data-target="#edit_ffb_Modal{{soplan.sopid}}"><i class="far fa-edit text"></i></button></td>
                                         <td>
-                                            <a class=" btn btn-danger far fa-trash-alt" href="delete_f/{{ffb.id}}" 
-                                            onclick="return confirm('คุณต้องการลบข้อมูล {{ffb.id}} หรือไม่ ?')" 
+                                            <a class=" btn btn-danger far fa-trash-alt" href="" 
+                                            onclick="return confirm('คุณต้องการลบข้อมูล {{soplan.sopid}} หรือไม่ ?')" 
                                             ></a>
                                         </td>
                                       </tr>

@@ -101,3 +101,78 @@ class SOPlan(models.Model):
         db_table = 'SOPlan'
     def __str__(self):
         return self.Goodname
+    
+class Webapp_Emp(models.Model):
+    EmpID = models.AutoField(primary_key=True)
+    IDCardNumber = models.CharField(max_length=255, null=True)
+    EmpCode = models.CharField(max_length=255, null=True)
+    EmpTitle = models.CharField(max_length=255, null=True)
+    EmpName = models.CharField(max_length=255, null=True)
+    Position = models.CharField(max_length=255, null=True)
+    DeptID = models.CharField(max_length=255, null=True)
+    BeginWorkDate = models.CharField(max_length=255, null=True)
+    BirthDay = models.CharField(max_length=255, null=True)
+    EduID = models.CharField(max_length=255, null=True)
+    ReligionID = models.CharField(max_length=255, null=True)
+    Address = models.CharField(max_length=255, null=True)
+    SubDistID = models.CharField(max_length=255, null=True)
+    DistID = models.CharField(max_length=255, null=True)
+    ProvinceID = models.CharField(max_length=255, null=True)
+    ZipCode = models.CharField(max_length=255, null=True)
+    
+    class Meta:
+        db_table = 'Webapp_Emp'
+    def __str__(self):
+        return self.EmpName
+        
+class Webapp_EmpTitle(models.Model):
+    EmpTitleID = models.CharField(max_length=255, primary_key=True)
+    EmpTitleName = models.CharField(max_length=255, null=True)
+    EmpTitleEmg = models.CharField(max_length=255, null=True)
+    class Meta:
+        db_table = 'Webapp_EmpTitle'
+    def __str__(self):
+        return self.EmpTitleName
+        
+class Webapp_Dept(models.Model):
+    DeptID = models.CharField(max_length=255, primary_key=True)
+    DeptName = models.CharField(max_length=255, null=True)
+    DeptShort = models.CharField(max_length=255, null=True)
+    class Meta:
+        db_table = 'Webapp_Dept'
+    def __str__(self):
+        return self.DeptName
+    
+class Webapp_Education(models.Model):
+    EduID = models.CharField(max_length=255, primary_key=True)
+    EduName = models.CharField(max_length=255, null=True)
+
+    class Meta:
+        db_table = 'Webapp_Education'
+
+    def __str__(self):
+        return self.EduName
+
+class Webapp_Religion(models.Model):
+    ReligionID = models.CharField(max_length=255, primary_key=True)
+    ReligionName = models.CharField(max_length=255, null=True)
+
+    class Meta:
+        db_table = 'Webapp_Religion'
+
+    def __str__(self):
+        return self.ReligionName
+    
+class Webapp_City(models.Model):
+    SubDistrictID = models.CharField(max_length=255, null=True)
+    SubDistrictName = models.CharField(max_length=255, null=True)
+    DistrictID = models.CharField(max_length=255, null=True)
+    DistrictName = models.CharField(max_length=255, null=True)
+    ProvinceID = models.CharField(max_length=255, null=True)
+    ProvinceName = models.CharField(max_length=255, null=True)
+
+    class Meta:
+        db_table = 'Webapp_City'
+
+    def __str__(self):
+        return f"{self.SubDistrictName}, {self.DistrictName}, {self.ProvinceName}"

@@ -1,0 +1,85 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block name %}
+<div class="sidebar-brand-text mx-3">ISANPALM</div>
+
+{% endblock %}
+
+{% block Dashboard %}
+<li class="nav-item active">
+  <a class="nav-link" href="/">
+  <i class="fas fa-fw fa-tachometer-alt"></i>
+  <span>ฝ่ายทรัพยากรบุคคล</span></a>    
+</li>
+
+{% endblock %}
+                  
+
+{% block content %}
+
+<!-- <h2 class="text-center">ข้อมูล</h2> -->
+<button class="btn btn-outline-success my-2" data-toggle="modal" data-target="#add_Modal"><i class="fas fa-file-invoice"> บันทึกข้อมูล</i></button>
+{% if messages %}
+  {% for messages in messages %}  
+  <div class="alert alert-success" role="alert">
+    <strong>{{messages}}</strong>
+  </div>
+    
+  {% endfor %}
+{% endif %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ลำดับ</th>
+        <th scope="col">รหัสพนักงาน</th>
+        <th scope="col"></th>
+        <th scope="col">ชื่อ</th>
+        <th scope="col">ตำแหน่ง</th>
+        <th scope="col">ฝ่าย</th>
+        <th scope="col">วันที่เริ่มงาน</th>
+        <th scope="col">วันเกิด</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for emp in all_emp %}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{emp.EmpCode}}</td>
+            <td>{% for emp_title in emp_titles %}
+                  {% if emp_title.EmpTitleID == emp.EmpTitle %}
+                    {{ emp_title.EmpTitleName }}
+                  {% endif %}
+                {% endfor %}
+            </td>
+            
+            <td>{{emp.EmpName}}</td>
+            <td>{{emp.Position}}</td>
+            <td>{% for dept in depts %}
+                  {% if dept.DeptID == emp.DeptID %}
+                    {{ dept.DeptName }}
+                  {% endif %}
+                {% endfor %}
+           </td>
+            <td>{{emp.BeginWorkDate}}</td>
+            <td>{{emp.BirthDay}}</td>
+            <td><button class="btn btn-warning" data-toggle="modal" data-target="#edit_Modal{{emp.EmpID}}"><i class="far fa-edit text"></i></button></td>
+            <td>
+                <a class=" btn btn-danger far fa-trash-alt" href="delete_emp/{{emp.EmpID}}" 
+                onclick="return confirm('คุณต้องการลบข้อมูล {{emp.EmpID}} หรือไม่ ?')" 
+                ></a>
+            </td>
+          </tr>
+
+          {% include 'myapp/edit2.html' %}
+<!-- Edit Myapp  -->
+
+        {% endfor %}
+    </tbody>
+  </table>
+
+
+    
+{% endblock %}
+
+
