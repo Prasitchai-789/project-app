@@ -1,0 +1,38 @@
+<!-- HRE  -->
+<div class="modal fade" id="form_emp_Modal{{emp.EmpID}}"  data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="form_emp_ModalModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title text-light font-weight-bold" id="form_emp_ModalModal"><i calss="fas fa-plus"></i>&nbsp;&nbsp;ข้อมูลการรับซื้อผลปาล์ม </h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/form_emp/{{emp.EmpID}}"  method="POST"  autocomplete="off">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="row col-md-12 mt-1">
+                            {% for emp in all_emp %}
+                                    <p>รหัสพนักงาน: {{ emp.EmpCode }}</p>
+                                    <p>ชื่อ: {{ emp.EmpName }}</p>
+                                    <p>ตำแหน่ง: {{ emp.Position }}</p>
+                                    <p>ฝ่าย: 
+                                    {% for dept in depts %}
+                                        {% if dept.DeptID == emp.DeptID %}
+                                        {{ dept.DeptName }}
+                                        {% endif %}
+                                    {% endfor %}
+                                    </p>
+                            {% endfor %}
+                        </div>   
+                    </div>
+                </div> 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                    <button type="submit"  class="btn btn-success" ><i class="far fa-save"></i> บันทึก </button>
+                </div>
+            </form> 
+            </div>
+        </div>
+    </div>
+
+

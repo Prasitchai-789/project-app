@@ -32,6 +32,7 @@ urlpatterns = [
     
 #<== HRE ==>
     path('index_emp',views.index_emp),
+    path('form_emp/<int:EmpID>',views.form_emp),
     path('delete_emp/<int:EmpID>',views.delete_emp),
 ]
 

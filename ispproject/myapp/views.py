@@ -1,12 +1,13 @@
 from django.shortcuts import render,redirect
 from django.utils.timezone import now
 from django.http import HttpResponse
-from .models import Person ,Ffb,Labtank,temp_dense,tank_volume,Webapp_Emp,SOPlan,Webapp_EmpTitle,Webapp_Dept
+from .models import Person ,Ffb,Labtank,temp_dense,tank_volume,Webapp_Emp,SOPlan,Webapp_EmpTitle,Webapp_Dept,Webapp_Education
 from django.contrib import messages
 from django.db.models import Max,Subquery, OuterRef
 from datetime import datetime,timedelta
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Sum
+from django.template.defaultfilters import date
 import requests
 from django.conf import settings
 
@@ -91,6 +92,17 @@ def rpo_po(request):
         'total_vendorcode_ramps_sum': total_vendorcode_ramps_sum,
         'current_page': current_page,})
 
+def send_line_notification(message):
+    url = "https://notify-api.line.me/api/notify"
+    token = 'FDkGYUZXSB3YjuvLGF5MkOEU61TxkSNzupCfEZkVYSs'
+    headers = {'content-type':'application/x-www-form-urlencoded','Authorization':'Bearer '+ token}
+    payload = {"message": message}
+    response = requests.post(url, headers=headers, data=payload)
+    
+    if response.status_code == 200:
+        print("Line notification sent successfully.")
+    else:
+        print("Failed to send Line notification.")
 
 
 
@@ -141,25 +153,20 @@ def add(request):
             docutype=docutype,
         )
         ffb.save()
+        
         messages.success(request,"บันทึกข้อมูลเรียบร้อย")
+        # ส่งการแจ้งเตือนผ่านไลน์
+        message = "วันที่ " + date(ffb.docudate, "d/m/Y")  + "\nเลขที่เอกสาร : " + (ffb.billid)+ "\nชื่อ :  " + (ffb.vendorname)+ "\nน้ำหนักสุทธิ : " + str(ffb.goodnet)+" Kg."
+        
+        send_line_notification(message)
+
         # เปลี่ยนเส้นทาง
         return redirect("/rpo_po")
     else :
         messages.success(request,"บันทึกข้อมูลไม่ได้")
         return render(request,"palm/rpo_po.html")
     
-def send_line_notification(msg):
-        url = 'https://notify-api.line.me/api/notify'
-        token = 'FDkGYUZXSB3YjuvLGF5MkOEU61TxkSNzupCfEZkVYSs'
 
-        headers = {
-            'content-type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Bearer ' + token
-        }
-
-        r = requests.post(url, headers=headers, data={'message': msg})
-
-        print(r.text)
     
 def edit_f(request,ffb_id):
     if request.method == "POST":
@@ -347,10 +354,21 @@ def index_emp(request):
     all_emp = Webapp_Emp.objects.all()
     emp_titles = Webapp_EmpTitle.objects.filter(EmpTitleID__in=all_emp.values_list('EmpTitle', flat=True))
     depts = Webapp_Dept.objects.filter(DeptID__in=all_emp.values_list('DeptID', flat=True))
-    return render(request, "hre/index_emp.html", { "all_emp": all_emp, "emp_titles": emp_titles , "depts": depts})
+    Educations = Webapp_Education.objects.filter(EduID__in=all_emp.values_list('EduID', flat=True))
+    return render(request, "hre/index_emp.html", { "all_emp": all_emp, "emp_titles": emp_titles , "depts": depts, "Educations": Educations})
+
+def form_emp(request,EmpID_id):
+    if request.method == "POST":
+        emp = Webapp_Emp.objects.get(EmpID=EmpID_id)
+        emp.name = request.POST["Empname"]
+    return render(request, "hre/index_emp.html", { "emp": emp,})
+
+
 
 def delete_emp(request,EmpID):
     emp = Webapp_Emp.objects.get(EmpID=EmpID)
     emp.delete()
     messages.success(request, "ลบข้อมูลเรียบร้อย")
     return redirect("/index_emp")
+
+
