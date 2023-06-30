@@ -1,7 +1,10 @@
 from django.shortcuts import render,redirect
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+
 from django.utils.timezone import now
 from django.http import HttpResponse
-from .models import Person ,Ffb,Labtank,temp_dense,tank_volume,Webapp_Emp,SOPlan,Webapp_EmpTitle,Webapp_Dept,Webapp_Education
+from .models import Person ,Ffb,Labtank,temp_dense,tank_volume,Webapp_Emp,SOPlan,Webapp_EmpTitle,Webapp_Dept,Webapp_Education,EMVendor
 from django.contrib import messages
 from django.db.models import Max,Subquery, OuterRef
 from datetime import datetime,timedelta
@@ -63,7 +66,9 @@ def delete(request,person_id):
 
 
 # <=== FFB ===>
+# @login_required
 def rpo_po(request):
+    
     all_ffb = Ffb.objects.all().order_by('-docudate','-billid')
     
     paginator = Paginator(all_ffb, 25)
@@ -86,13 +91,19 @@ def rpo_po(request):
     total_count = Ffb.objects.filter(docudate=current_date).count()
     
     
+    vendor_code = all_ffb.values_list('vendorcode', flat=True)
+    vendors = EMVendor.objects.filter(VendorCode__in=vendor_code).values('VendorName')
+    
+    all_empvendor = EMVendor.objects.values('VendorName')
         
     return render(request,"palm/rpo_po.html",{
         "all_ffb":all_ffb,'total_sum_thousands': total_sum_thousands,
         'total_count': total_count,
         'total_vendorcode_farmer_sum': total_vendorcode_farmer_sum,
         'total_vendorcode_ramps_sum': total_vendorcode_ramps_sum,
-        'current_page': current_page,})
+        'current_page': current_page,
+        'vendors': vendors,
+        'all_empvendor': all_empvendor,})
 
 def send_line_notification(message):
     url = "https://notify-api.line.me/api/notify"
@@ -150,7 +161,7 @@ def add(request):
         messages.success(request,"บันทึกข้อมูลเรียบร้อย")
         current_date = datetime.now().date()  # วันปัจจุบัน
         total_sum = Ffb.objects.filter(docudate=current_date).aggregate(sum=Sum('goodnet'))
-        total_ton = round(total_sum['sum'] / 1000, 2)
+        total_ton = format(total_sum['sum'] / 1000, '.2f')
         # ส่งการแจ้งเตือนผ่านไลน์
         message = "ยอด " + str(total_ton) + " ตัน" + "\nวันที่ " + date(ffb.docudate, "d/m/Y")  + "\nเลขที่เอกสาร : " + (ffb.billid)+ "\nชื่อ :  " + (ffb.vendorname)+ "\nน้ำหนักสุทธิ : " + str(ffb.goodnet)+" Kg."
         
@@ -161,7 +172,13 @@ def add(request):
     else :
         messages.success(request,"บันทึกข้อมูลไม่ได้")
         return render(request,"palm/rpo_po.html")
-    
+
+def your_view_name(request):
+    if request.method == "POST":
+        vendorcode = request.POST.get("vendorcode")
+        vendorname = EMVendor.objects.filter(VendorCode=vendorcode).values_list("VendorName", flat=True).first()
+        return render(request, "palm/rpo_po.html", {"vendorname": vendorname})
+    return render(request, "palm/rpo_po.html")    
 
     
 def edit_f(request,ffb_id):
@@ -353,10 +370,17 @@ def index_emp(request):
     Educations = Webapp_Education.objects.filter(EduID__in=all_emp.values_list('EduID', flat=True))
     return render(request, "hre/index_emp.html", { "all_emp": all_emp, "emp_titles": emp_titles , "depts": depts, "Educations": Educations})
 
-def form_emp(request,EmpID_id):
+def form_emp(request,EmpID):
     if request.method == "POST":
-        emp = Webapp_Emp.objects.get(EmpID=EmpID_id)
-        emp.name = request.POST["Empname"]
+        emp = Webapp_Emp.objects.get(EmpID=EmpID)
+        emp.EmpName = request.POST["EmpName"]
+        emp.Position = request.POST["Position"]
+    
+    
+    else :
+   
+        #ดึงข้อมูล
+        emp = Webapp_Emp.objects.get(EmpID=EmpID)
     return render(request, "hre/index_emp.html", { "emp": emp,})
 
 

@@ -2,8 +2,11 @@ from django.contrib import admin
 from django.urls import path, re_path
 from django.urls.conf import include
 from . import views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
+    
     path('',views.index),
     path('form',views.form),
     path('edit/<int:person_id>',views.edit),

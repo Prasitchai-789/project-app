@@ -176,3 +176,26 @@ class Webapp_City(models.Model):
 
     def __str__(self):
         return f"{self.SubDistrictName}, {self.DistrictName}, {self.ProvinceName}"
+    
+class EMVendor(models.Model):
+    VendorID = models.CharField(max_length=255, null=True)
+    VendorGroupID = models.CharField(max_length=255, null=True)
+    VendorName = models.CharField(max_length=255, null=True)
+    VendorCode = models.CharField(max_length=255, null=True)
+    VendorTitle = models.CharField(max_length=255, null=True)
+    VendorType = models.CharField(max_length=255, null=True)
+    VendorAddr1 = models.CharField(max_length=255, null=True)
+    District = models.CharField(max_length=255, null=True)
+    Amphur = models.CharField(max_length=255, null=True)
+    Province = models.CharField(max_length=255, null=True)
+    PostCode = models.CharField(max_length=255, null=True)
+    ContTel = models.CharField(max_length=255, null=True)
+    CardNo = models.CharField(max_length=255, null=True)
+    VendorTypeID = models.CharField(max_length=255, null=True)
+
+    class Meta:
+        db_table = 'EMVendor'
+        managed = False
+
+    def __str__(self):
+        return f"{self.VendorCode}, {self.VendorName}, {self.VendorGroupID}"

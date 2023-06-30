@@ -3,34 +3,65 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark">
-                <h5 class="modal-title text-light font-weight-bold" id="form_emp_ModalModal"><i calss="fas fa-plus"></i>&nbsp;&nbsp;ข้อมูลการรับซื้อผลปาล์ม </h5>
+                <h5 class="modal-title text-light font-weight-bold" id="form_emp_ModalModal"><i calss="fas fa-plus"></i>&nbsp;&nbsp;ข้อมูลพนักงาน </h5>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="/form_emp/{{emp.EmpID}}"  method="POST"  autocomplete="off">
+            <form action="/form_emp/{{emp.EmpID}}" method="POST"  autocomplete="off">
                 {% csrf_token %}
                 <div class="modal-body">
                     <div class="row">
                         <div class="row col-md-12 mt-1">
-                            {% for emp in all_emp %}
-                                    <p>รหัสพนักงาน: {{ emp.EmpCode }}</p>
-                                    <p>ชื่อ: {{ emp.EmpName }}</p>
-                                    <p>ตำแหน่ง: {{ emp.Position }}</p>
-                                    <p>ฝ่าย: 
-                                    {% for dept in depts %}
-                                        {% if dept.DeptID == emp.DeptID %}
-                                        {{ dept.DeptName }}
+                            <div class="card " style="width: 18rem;">
+                                <img src="static/img/SAY.png" class="card-img-top py-2" alt="...">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                    {% comment %} {% for emp_title in emp_titles %}
+                                        {% if emp_title.EmpTitleID == emp.EmpTitle %}
+                                            {{ emp_title.EmpTitleName}}
                                         {% endif %}
-                                    {% endfor %}
+                                    {% endfor %}{{emp.EmpName}}
+                                    </p> {% endcomment %}
+                                </div>
+                            </div>
+                            <div class="col-md-6 ml-5 py-3" style="width: 18rem;">
+                                <div class="">
+                                    <p class=" h5">ชื่อ : 
+                                    {% for emp_title in emp_titles %}
+                                        {% if emp_title.EmpTitleID == emp.EmpTitle %}
+                                            {{ emp_title.EmpTitleName}}
+                                        {% endif %}
+                                    {% endfor %}{{emp.EmpName}}
                                     </p>
-                            {% endfor %}
-                        </div>   
+                                    <p></p>
+                                    <p class="text h5">ตำแหน่ง : {{emp.Position}}</p>
+                                    <p></p>
+                                    <p class="text h5">ฝ่าย : 
+                                        {% for dept in depts %}
+                                            {% if dept.DeptID == emp.DeptID %}
+                                                {{ dept.DeptName }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <input type="text" name="poinvid" class="form-control" placeholder="" required>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group ">
+                                    <input type="text" id="scaler" name="scaler" class="form-control" placeholder="">
+                                    
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div> 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                    <button type="submit"  class="btn btn-success" ><i class="far fa-save"></i> บันทึก </button>
                 </div>
-            </form> 
+            </form>
             </div>
         </div>
     </div>

@@ -36,18 +36,23 @@
                             <label for="level" class="form-label fw-bold">ข้อมูลลูกค้า</label>
                             <div class="col-md-6">
                                 <div class="form-group ">
-                                    <input type="text" name="vendorcode" class="form-control" placeholder="รหัสคู่ค้า" required {% block Value-vendorcode %} {% endblock Value-vendorcode %}>
+                                    <input type="text" name="vendorcode" class="form-control" placeholder="VendorCode" required {% block Value-vendorcode %} {% endblock Value-vendorcode %}>
                                     
                                 </div>
                             </div>
                          
                             <div class="col-md-6">
                                 <div class="form-group ">
-                                    <input type="text" name="vendorname" class="form-control" placeholder="ชื่อคู่ค้า" required {% block Value-vendorname %} {% endblock Value-vendorname %}>
+                                    <input type="text" name="vendorname" id="vendorname-input" class="form-control" placeholder=""  {% block Value-vendorname %} {% endblock Value-vendorname %}>
                                     
                                 </div>
                             </div>
                         </div>
+                        <script>
+                            {% if vendorname %}
+                            document.getElementById("vendorname-input").placeholder = "{{ vendorname }}";
+                            {% endif %}
+                        </script>
                         <div class="row col-md-12 mt-1">
                             <label for="Goodin" class="form-label fw-bold">ข้อมูลรถ</label>
                                 <div class="col-md-6">
@@ -147,11 +152,10 @@
                 </div> 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                    {% block modal-submit %}<button type="submit"  class="btn btn-success" ><i class="far fa-save"></i> บันทึก </button>{% endblock modal-submit %}
+                    {% block modal-submit %}<button type="submit" onclick="showToast()" class="btn btn-success" ><i class="far fa-save"></i> บันทึก </button>{% endblock modal-submit %}
                 </div>   
             </form>
         </div>
     </div>
 </div>
-
 

@@ -28,7 +28,8 @@ SECRET_KEY = 'django-insecure-e##d)=hi37iv=bntr^uj58vjget@+!zswg=ulm#b=(+h@-atnc
 DEBUG = True
 
 # ALLOWED_HOSTS = ['10.0.10.21','*']
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.0.2.105', 'example.com', 'localhost']
 
 
 # Application definition
@@ -145,3 +146,5 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LINE_NOTIFY_ACCESS_TOKEN = 'bcLkvlbp7Oe08ilIrL4RnW5WN921F72TsKSRXcA77ik'
+
+LOGIN_URL = '/accounts/login/'

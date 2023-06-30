@@ -115,7 +115,7 @@
                 <div class="card-header py-3">
                     <div class="row d-flex">
                         <div class="col">
-                            <h4 class="m-0 font-weight-bold text-center">ตารางแสดงรายการซื้อผลปาล์ม</h4>
+                            <h4 class="m-0 font-weight-bold text-center">ตารางแสดงรายการซื้อผลปาล์ม {% if x in all_empvendor %}{{x.VendorName}}{% endif%}</h4>
                             <button class="btn btn-outline-success" data-toggle="modal" data-target="#add_ffb_Modal" ><i class="fas fa-file-invoice"> บันทึกข้อมูล</i></button>
                         </div>
                         
@@ -140,6 +140,7 @@
                                 <strong>{{messages}}</strong>
                             </div>
                           </div>
+                          
                         {% endfor %}
                     {% endif %}
                     <div class="card-body py-2 ">
@@ -221,7 +222,10 @@
     </div>
 </form>
 
-    {% include 'palm/add_rpo_po.html' %}
+<script>
 
+    {% include 'palm/add_rpo_po.html' %}
+    
+    
 
 {% endblock %}
